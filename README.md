@@ -3,7 +3,7 @@
 
 ## Overview
 
-![Main Panel](/snapshots/mainpanel.png?raw=true "Main panel")
+![Main Panel](/snapshots/mainpanel.PNG?raw=true "Main panel")
 
 JConsoleGraphPlugin is a plugin of JConsole.
 It allows user to create custom graphs.
@@ -21,4 +21,4 @@ After complete the form:
 * Indicate a title
 * Select all the attribute to show.
 
-![Example](/snapshots/addgraph.png?raw=true "Example")
+![Example](/snapshots/addgraph.PNG?raw=true "Example")
