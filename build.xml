@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="JConsoleGraphPlugin">
+	<property name="dist" value="dist" />
+	<property name="target" value="1.6" />
+	<property name="source" value="1.6" />
+	<tstamp>
+		<format property="VERSIONDATE" pattern="yyyyMMddhhmm" timezone="UTC" />
+	</tstamp>
+	<property name="version" value="1.0.${VERSIONDATE}" />
+	<condition property="jdk.home" value="${java.home}">
+		<not>
+			<isset property="jdk.home" />
+		</not>
+	</condition>
+	<target name="init">
+		<mkdir dir="bin" />
+		<copy includeemptydirs="false" todir="bin">
+			<fileset dir="src">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="${dist}" />
+	</target>
+	<target depends="init" name="compile">
+		<javac debug="true" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src" />
+			<classpath>
+				<pathelement path="${classpath}" />
+				<pathelement location="${jdk.home}/lib/jconsole.jar" />
+			</classpath>
+		</javac>
+	</target>
+	<target depends="compile" name="build">
+		<jar destfile="${dist}/jconsolegraphplugin.jar" basedir="bin">
+			<manifest>
+				<attribute name="Implementation-Title" value="JConsoleGraphPlugin" />
+				<attribute name="Implementation-Version" value="${version}" />
+			</manifest>
+		</jar>
+	</target>
+</project>
