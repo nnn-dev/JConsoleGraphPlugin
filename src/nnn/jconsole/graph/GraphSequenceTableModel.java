@@ -58,13 +58,13 @@ public class GraphSequenceTableModel implements TableModel {
 	public String getColumnName(int arg0) {
 		switch (arg0) {
 		case 0:
-			return "Add?";
+			return Messages.getString("GraphSequenceTableModel.ADD"); //$NON-NLS-1$
 		case 1:
-			return "ObjectName";
+			return Messages.getString("GraphSequenceTableModel.OBJECTNAME"); //$NON-NLS-1$
 		case 2:
-			return "Attribute";
+			return Messages.getString("GraphSequenceTableModel.ATTRIBUTE"); //$NON-NLS-1$
 		case 3:
-			return "Color";
+			return Messages.getString("GraphSequenceTableModel.COLOR"); //$NON-NLS-1$
 		default:
 			return null;
 		}

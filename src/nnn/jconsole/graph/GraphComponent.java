@@ -69,9 +69,9 @@ public class GraphComponent extends JPanel {
 			Hashtable<String, String> properties=o.getKeyPropertyList();
 			String name=gs.getAttribute();
 			//look if objetname as a name
-			for(String key:new String[]{"name","id","path","token"}){
+			for(String key:new String[]{"name","id","path","token"}){ //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				if (properties.containsKey(key)) {
-					name=properties.get(key)+"."+name;
+					name=String.format("%s.%s",properties.get(key),name); //$NON-NLS-1$
 					break;
 				}
 			}
@@ -99,7 +99,7 @@ public class GraphComponent extends JPanel {
 	 */
 	public void updateGraph(MBeanServerConnection msc) {
 		//remove error
-		message.setText("");
+		message.setText(""); //$NON-NLS-1$
 		long[] values = new long[l.length];
 		for (int i = 0; i < l.length; i++) {
 			final GraphSequence seq = l[i];

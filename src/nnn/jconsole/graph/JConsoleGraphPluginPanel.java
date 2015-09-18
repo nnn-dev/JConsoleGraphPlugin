@@ -37,12 +37,12 @@ public class JConsoleGraphPluginPanel extends JPanel {
 	public JConsoleGraphPluginPanel() {
 		setLayout(new BorderLayout());
 		JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
-		JButton adder = new JButton("Add graph");
-		JButton remover = new JButton("Remove graph");
+		JButton adder = new JButton(Messages.getString("JConsoleGraphPluginPanel.ADD_CHART")); //$NON-NLS-1$
+		JButton remover = new JButton(Messages.getString("JConsoleGraphPluginPanel.REMOVE_CHART")); //$NON-NLS-1$
 		JPanel graphspanel = new JPanel();
 		graphspanel.setLayout(new BoxLayout(graphspanel, BoxLayout.PAGE_AXIS));
 		TimeComboBox timeComboBox = new TimeComboBox();
-		top.add(new JLabel("Time Range : "));
+		top.add(new JLabel(String.format("%s : ",Messages.getString("JConsoleGraphPluginPanel.TIME_RANGE")))); //$NON-NLS-1$,$NON-NLS-2$
 		top.add(timeComboBox);
 		top.add(adder);
 		top.add(remover);
@@ -55,7 +55,7 @@ public class JConsoleGraphPluginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (context.getConnectionState() != ConnectionState.CONNECTED) {
-					showError("No connected");
+					showError(Messages.getString("JConsoleGraphPluginPanel.NOT_CONNECTED")); //$NON-NLS-1$
 				} else {
 					try {
 						GraphComponent g = GraphCreateDialog.showDialog(JConsoleGraphPluginPanel.this,
@@ -97,7 +97,7 @@ public class JConsoleGraphPluginPanel extends JPanel {
 	 *            message.
 	 */
 	protected void showError(String message) {
-		JOptionPane.showMessageDialog(this, message, "ERROR", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(this, message, Messages.getString("JConsoleGraphPluginPanel.ERROR_TITLE"), JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$
 
 	}
 
@@ -124,7 +124,7 @@ public class JConsoleGraphPluginPanel extends JPanel {
 			sb.append(')');
 		}
 		if (e2.getCause()!=null){
-			sb.append(String.format("%n"));
+			sb.append(String.format("%n")); //$NON-NLS-1$
 			appendExceptionError(sb, e2.getCause());
 		}
 	}

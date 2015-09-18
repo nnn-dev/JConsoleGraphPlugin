@@ -51,13 +51,13 @@ public class GraphsList extends JDialog implements ActionListener {
 	}
 
 	private GraphsList(Frame frame, Set<GraphComponent> g) {
-		super(frame, "Select graph", true);
+		super(frame, Messages.getString("GraphsList.TITLE"), true); //$NON-NLS-1$
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton(Messages.getString("GraphsList.CANCEL")); //$NON-NLS-1$
 		cancelButton.addActionListener(this);
 		//
-		final JButton setButton = new JButton("Select");
-		setButton.setActionCommand("Set");
+		final JButton setButton = new JButton(Messages.getString("GraphsList.SELECT")); //$NON-NLS-1$
+		setButton.setActionCommand("Set"); //$NON-NLS-1$
 		setButton.addActionListener(this);
 		getRootPane().setDefaultButton(setButton);
 
@@ -80,7 +80,7 @@ public class GraphsList extends JDialog implements ActionListener {
 
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-		JLabel label = new JLabel("Select Graph");
+		JLabel label = new JLabel(Messages.getString("GraphsList.SELECT")); //$NON-NLS-1$
 		label.setLabelFor(t);
 		listPane.add(label);
 		listPane.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -107,7 +107,7 @@ public class GraphsList extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (!"Set".equals(e.getActionCommand())) {
+		if (!"Set".equals(e.getActionCommand())) { //$NON-NLS-1$
 			value = null;
 		}
 		GraphsList.dialog.setVisible(false);

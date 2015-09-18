@@ -67,13 +67,13 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 	private JTextField title;
 
 	private GraphCreateDialog(Frame frame, Set<GraphSequence> g) {
-		super(frame, "Create a new graph", true);
+		super(frame, Messages.getString("GraphCreateDialog.TITLE"), true); //$NON-NLS-1$
 
-		JButton cancelButton = new JButton("Cancel");
+		JButton cancelButton = new JButton(Messages.getString("GraphCreateDialog.CANCEL")); //$NON-NLS-1$
 		cancelButton.addActionListener(this);
 		//
-		final JButton setButton = new JButton("Create");
-		setButton.setActionCommand("Set");
+		final JButton setButton = new JButton(Messages.getString("GraphCreateDialog.CREATE")); //$NON-NLS-1$
+		setButton.setActionCommand("Set"); //$NON-NLS-1$
 		setButton.addActionListener(this);
 		getRootPane().setDefaultButton(setButton);
 
@@ -121,7 +121,7 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
 		//default title
-		title = new JTextField("New Graph");
+		title = new JTextField(Messages.getString("GraphCreateDialog.DEFAULT_CHART")); //$NON-NLS-1$
 		listPane.add(title);
 		listPane.add(Box.createRigidArea(new Dimension(0, 5)));
 		listPane.add(listScroller);
@@ -150,7 +150,7 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 	// Handle clicks on the Set and Cancel buttons.
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ("Set".equals(e.getActionCommand())) {
+		if ("Set".equals(e.getActionCommand())) { //$NON-NLS-1$
 			value = true;
 		} else {
 			value = false;
@@ -214,7 +214,7 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					cvalue = JColorChooser.showDialog(button, "Color", (Color) value);
+					cvalue = JColorChooser.showDialog(button, Messages.getString("GraphCreateDialog.COLORCHOOSER_TITLE"), (Color) value); //$NON-NLS-1$
 				}
 			});
 			return button;

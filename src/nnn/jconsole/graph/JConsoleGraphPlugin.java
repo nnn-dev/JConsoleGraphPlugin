@@ -20,7 +20,7 @@ public class JConsoleGraphPlugin extends JConsolePlugin {
 	@Override
 	public Map<String, JPanel> getTabs() {
 		Map<String, JPanel> res = new HashMap<String, JPanel>();
-		res.put("Custom Graphs", panel);
+		res.put(Messages.getString("JConsoleGraphPlugin.MAIN_PANEL_TITLE"), panel); //$NON-NLS-1$
 		return res;
 	}
 

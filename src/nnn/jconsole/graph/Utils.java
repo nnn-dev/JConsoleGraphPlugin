@@ -37,7 +37,7 @@ public class Utils {
 		try {
 			os = msc.queryNames(null, null);
 		} catch (IOException e1) {
-			throw new JConsoleGraphPluginException("cannot get mbeans", e1);
+			throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_MBEAN"), e1); //$NON-NLS-1$
 		}
 		Set<GraphSequence> res = new TreeSet<GraphSequence>();
 		for (ObjectName o : os) {
@@ -53,9 +53,9 @@ public class Utils {
 					}
 				}
 			} catch (IOException e1) {
-				throw new JConsoleGraphPluginException("cannot get attributes of " + o.getCanonicalName(), e1);
+				throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
 			} catch (JMException e1) {
-				throw new JConsoleGraphPluginException("cannot get attributes of " + o.getCanonicalName(), e1);
+				throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
 			}
 		}
 		return res;
@@ -68,7 +68,7 @@ public class Utils {
 			final CompositeData data = ((CompositeData) v);
 			CompositeType ct = data.getCompositeType();
 			for (String key : ct.keySet()) {
-				searchNumberValue(res, o, i + "." + key, data.get(key));
+				searchNumberValue(res, o, String.format("%s.%s", i , key), data.get(key)); //$NON-NLS-1$
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class Utils {
 	public static long getValue(MBeanServerConnection msc, ObjectName o, String n) throws MBeanException {
 		Object v;
 		try {
-			String[] s = n.split("\\.");
+			String[] s = n.split("\\."); //$NON-NLS-1$
 			v = msc.getAttribute(o, s[0]);
 			if (v instanceof CompositeData) {
 				for (int j = 1; j < s.length; j++) {

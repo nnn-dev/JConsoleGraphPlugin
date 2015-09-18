@@ -6,7 +6,7 @@
 	<tstamp>
 		<format property="VERSIONDATE" pattern="yyyyMMddhhmm" timezone="UTC" />
 	</tstamp>
-	<property name="version" value="1.0.${VERSIONDATE}" />
+	<property name="version" value="1.1.${VERSIONDATE}" />
 	<condition property="jdk.home" value="${java.home}">
 		<not>
 			<isset property="jdk.home" />
