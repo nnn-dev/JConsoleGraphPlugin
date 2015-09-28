@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.management.Attribute;
 import javax.management.JMException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanException;
@@ -29,7 +30,8 @@ public class Utils {
 	 * @param msc
 	 *            connection.
 	 * @return all potential sequences.
-	 * @throws JConsoleGraphPluginException exception during retrieve.
+	 * @throws JConsoleGraphPluginException
+	 *             exception during retrieve.
 	 */
 	public static Set<GraphSequence> getPotentialsSequences(MBeanServerConnection msc)
 			throws JConsoleGraphPluginException {
@@ -44,24 +46,27 @@ public class Utils {
 			MBeanInfo m;
 			try {
 				m = msc.getMBeanInfo(o);
-				for (MBeanAttributeInfo i : m.getAttributes()) {
+				MBeanAttributeInfo[] iatts = m.getAttributes();
+				String[] satts = new String[iatts.length];
+				for (int i = 0; i < iatts.length; i++) {
+					satts[i] = iatts[i].getName();
+				}
+				for (Attribute i : msc.getAttributes(o, satts).asList()) {
 					try {
-						Object v = msc.getAttribute(o, i.getName());
+						Object v = i.getValue();
 						searchNumberValue(res, o, i.getName(), v);
 					} catch (RuntimeMBeanException e) {
 						// ignore because we cannot get attribute.
-					} catch (IOException e) {
-                        // ignore because we cannot get attribute (serialization problem?).
-                    } catch (JMException e) {
-                        // ignore because we cannot get attribute.
-                    }
+					}
 				}
-            } catch (javax.management.InstanceNotFoundException e1) {
-                //ignore because mbean does not exist anymore
+			} catch (javax.management.InstanceNotFoundException e1) {
+				// ignore because mbean does not exist anymore
 			} catch (IOException e1) {
-				throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
+				throw new JConsoleGraphPluginException(
+						Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
 			} catch (JMException e1) {
-				throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
+				throw new JConsoleGraphPluginException(
+						Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
 			}
 		}
 		return res;
@@ -74,18 +79,23 @@ public class Utils {
 			final CompositeData data = ((CompositeData) v);
 			CompositeType ct = data.getCompositeType();
 			for (String key : ct.keySet()) {
-				searchNumberValue(res, o, String.format("%s.%s", i , key), data.get(key)); //$NON-NLS-1$
+				searchNumberValue(res, o, String.format("%s.%s", i, key), data.get(key)); //$NON-NLS-1$
 			}
 		}
 	}
 
 	/**
 	 * Retrieve value of sequence.
-	 * @param msc connection. 
-	 * @param o objectname.
-	 * @param n attribute name.
+	 * 
+	 * @param msc
+	 *            connection.
+	 * @param o
+	 *            objectname.
+	 * @param n
+	 *            attribute name.
 	 * @return value.
-	 * @throws JConsoleGraphPluginException exception during retrieve.
+	 * @throws JConsoleGraphPluginException
+	 *             exception during retrieve.
 	 */
 	public static long getValue(MBeanServerConnection msc, ObjectName o, String n) throws MBeanException {
 		Object v;

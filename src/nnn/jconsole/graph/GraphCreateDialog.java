@@ -49,24 +49,27 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 
 	/**
 	 * Show dialog to create a new graph.
-	 * @param parent Parent's frame.
-	 * @param g possibly sequences.
+	 * 
+	 * @param parent
+	 *            Parent's frame.
+	 * @param g
+	 *            possibly sequences.
 	 * @return new graph component or <code>null</code> if user cancelled.
 	 */
-	public static GraphComponent showDialog(Component parent, Set<GraphSequence> g) {
+	public static GraphComponent showDialog(Component parent, String title,Set<GraphSequence> g) {
 		Frame frame = JOptionPane.getFrameForComponent(parent);
-		dialog = new GraphCreateDialog(frame, g);
+		dialog = new GraphCreateDialog(frame, title,g);
 		dialog.setVisible(true);
 		if (value) {
-			return new GraphComponent(dialog.title.getText(), dialog.dataModel.getVisibles());
+			return new GraphComponent(dialog.titlefield.getText(), dialog.dataModel.getVisibles());
 		}
 		return null;
 	}
 
 	private GraphSequenceTableModel dataModel;
-	private JTextField title;
+	private JTextField titlefield;
 
-	private GraphCreateDialog(Frame frame, Set<GraphSequence> g) {
+	private GraphCreateDialog(Frame frame,String title, Set<GraphSequence> g) {
 		super(frame, Messages.getString("GraphCreateDialog.TITLE"), true); //$NON-NLS-1$
 
 		JButton cancelButton = new JButton(Messages.getString("GraphCreateDialog.CANCEL")); //$NON-NLS-1$
@@ -77,8 +80,8 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		setButton.addActionListener(this);
 		getRootPane().setDefaultButton(setButton);
 
-		JTable t = new JTable();
-		//Add/Remove line if double-click.
+		final JTable t = new JTable();
+		// Add/Remove line if double-click.
 		t.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent me) {
@@ -92,7 +95,7 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 				}
 			}
 		});
-		//Add/Remove line if space typed.
+		// Add/Remove line if space typed.
 		t.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -108,7 +111,7 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		});
 		this.dataModel = new GraphSequenceTableModel(g);
 		t.setModel(dataModel);
-		//set width for first and last columns
+		// set width for first and last columns
 		t.getColumn(t.getColumnName(0)).setMaxWidth(64);
 		TableColumn c = t.getColumn(t.getColumnName(3));
 		c.setMaxWidth(64);
@@ -120,9 +123,9 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 
 		JPanel listPane = new JPanel();
 		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-		//default title
-		title = new JTextField(Messages.getString("GraphCreateDialog.DEFAULT_CHART")); //$NON-NLS-1$
-		listPane.add(title);
+		// default title
+		titlefield = new JTextField(title);
+		listPane.add(titlefield);
 		listPane.add(Box.createRigidArea(new Dimension(0, 5)));
 		listPane.add(listScroller);
 		listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -206,15 +209,16 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		}
 
 		@Override
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+		public Component getTableCellEditorComponent(JTable table, final Object value, boolean isSelected, int row,
 				int column) {
-			JButton button = new JButton();
-			button.setForeground((Color)value);
+			final JButton button = new JButton();
+			button.setForeground((Color) value);
 			button.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					cvalue = JColorChooser.showDialog(button, Messages.getString("GraphCreateDialog.COLORCHOOSER_TITLE"), (Color) value); //$NON-NLS-1$
+					cvalue = JColorChooser.showDialog(button,
+							Messages.getString("GraphCreateDialog.COLORCHOOSER_TITLE"), (Color) value); //$NON-NLS-1$
 				}
 			});
 			return button;

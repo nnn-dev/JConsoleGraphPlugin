@@ -12,8 +12,11 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Create a sequence.
-	 * @param objectName name of the mbean.
-	 * @param attributename name of the attribute.
+	 * 
+	 * @param objectName
+	 *            name of the mbean.
+	 * @param attributename
+	 *            name of the attribute.
 	 */
 	public GraphSequence(ObjectName objectName, String attributename) {
 		this.name = objectName;
@@ -25,6 +28,7 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Get the mbean name.
+	 * 
 	 * @return ObjectName.
 	 */
 	public ObjectName getObjectName() {
@@ -33,6 +37,7 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Get the attribute.
+	 * 
 	 * @return attribute.
 	 */
 	public String getAttribute() {
@@ -47,6 +52,7 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Indicate if the sequence is visible (or to be added to a new graph).
+	 * 
 	 * @return sequence is visible.
 	 */
 	public boolean isVisible() {
@@ -57,6 +63,7 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Indicate the color of the graph.
+	 * 
 	 * @return color of the graph or <code>null</code>.
 	 */
 	public Color getColor() {
@@ -65,13 +72,17 @@ public class GraphSequence implements Comparable<GraphSequence> {
 
 	/**
 	 * Set color.
-	 * @param c new color.
+	 * 
+	 * @param c
+	 *            new color.
 	 */
 	public void setColor(Color c) {
 		this.color = c;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override

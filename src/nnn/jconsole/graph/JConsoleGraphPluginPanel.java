@@ -39,10 +39,10 @@ public class JConsoleGraphPluginPanel extends JPanel {
 		JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
 		JButton adder = new JButton(Messages.getString("JConsoleGraphPluginPanel.ADD_CHART")); //$NON-NLS-1$
 		JButton remover = new JButton(Messages.getString("JConsoleGraphPluginPanel.REMOVE_CHART")); //$NON-NLS-1$
-		JPanel graphspanel = new JPanel();
+		final JPanel graphspanel = new JPanel();
 		graphspanel.setLayout(new BoxLayout(graphspanel, BoxLayout.PAGE_AXIS));
-		TimeComboBox timeComboBox = new TimeComboBox();
-		top.add(new JLabel(String.format("%s : ",Messages.getString("JConsoleGraphPluginPanel.TIME_RANGE")))); //$NON-NLS-1$,$NON-NLS-2$
+		final TimeComboBox timeComboBox = new TimeComboBox();
+		top.add(new JLabel(String.format("%s : ", Messages.getString("JConsoleGraphPluginPanel.TIME_RANGE")))); //$NON-NLS-1$ ,$NON-NLS-2$
 		top.add(timeComboBox);
 		top.add(adder);
 		top.add(remover);
@@ -59,6 +59,8 @@ public class JConsoleGraphPluginPanel extends JPanel {
 				} else {
 					try {
 						GraphComponent g = GraphCreateDialog.showDialog(JConsoleGraphPluginPanel.this,
+								String.format("%s %d", Messages.getString("GraphCreateDialog.DEFAULT_CHART"), //$NON-NLS-1$ //$NON-NLS-2$
+										graphs.size() + 1),
 								Utils.getPotentialsSequences(context.getMBeanServerConnection()));
 						if (g != null) {
 							graphs.add(g);
@@ -72,7 +74,6 @@ public class JConsoleGraphPluginPanel extends JPanel {
 				}
 			}
 
-			
 		});
 		// how to remove graph.
 		remover.addActionListener(new ActionListener() {
@@ -97,24 +98,27 @@ public class JConsoleGraphPluginPanel extends JPanel {
 	 *            message.
 	 */
 	protected void showError(String message) {
-		JOptionPane.showMessageDialog(this, message, Messages.getString("JConsoleGraphPluginPanel.ERROR_TITLE"), JOptionPane.WARNING_MESSAGE); //$NON-NLS-1$
+		JOptionPane.showMessageDialog(this, message, Messages.getString("JConsoleGraphPluginPanel.ERROR_TITLE"), //$NON-NLS-1$
+				JOptionPane.WARNING_MESSAGE);
 
 	}
 
 	/**
 	 * Show exception error.
-	 * @param e2 exception.
+	 * 
+	 * @param e2
+	 *            exception.
 	 */
 	private void showError(Exception e2) {
-		StringBuilder sb=new StringBuilder();
-		appendExceptionError(sb,e2);
+		StringBuilder sb = new StringBuilder();
+		appendExceptionError(sb, e2);
 		showError(sb.toString());
 	}
-	
+
 	private void appendExceptionError(StringBuilder sb, Throwable e2) {
 		sb.append(e2.getLocalizedMessage());
-		StackTraceElement[] s=e2.getStackTrace();
-		if (s!=null&&s.length>0){
+		StackTraceElement[] s = e2.getStackTrace();
+		if (s != null && s.length > 0) {
 			sb.append('(');
 			sb.append(s[0].getClassName());
 			sb.append('.');
@@ -123,7 +127,7 @@ public class JConsoleGraphPluginPanel extends JPanel {
 			sb.append(s[0].getLineNumber());
 			sb.append(')');
 		}
-		if (e2.getCause()!=null){
+		if (e2.getCause() != null) {
 			sb.append(String.format("%n")); //$NON-NLS-1$
 			appendExceptionError(sb, e2.getCause());
 		}

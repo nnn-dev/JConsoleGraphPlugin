@@ -42,7 +42,9 @@ public class GraphComponent extends JPanel {
 	 */
 	private String title;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.Component#toString()
 	 */
 	@Override
@@ -52,31 +54,35 @@ public class GraphComponent extends JPanel {
 
 	/**
 	 * Create component.
-	 * @param title graph title.
-	 * @param timeComboBox link to the global timeComboBox.
-	 * @param collection sequences.
+	 * 
+	 * @param title
+	 *            graph title.
+	 * @param timeComboBox
+	 *            link to the global timeComboBox.
+	 * @param collection
+	 *            sequences.
 	 */
 	public GraphComponent(String title, Collection<GraphSequence> collection) {
 		this.title = title;
 		setLayout(new BorderLayout());
 		p = new PlotterPanel(title, Plotter.Unit.NONE, false);
 		p.setVisible(true);
-		l=new GraphSequence[collection.size()];
-		l=collection.toArray(l);
-		for(int i=0;i<l.length;i++){
-			final GraphSequence gs=l[i];
-			final ObjectName o=gs.getObjectName();
-			Hashtable<String, String> properties=o.getKeyPropertyList();
-			String name=gs.getAttribute();
-			//look if objetname as a name
-			for(String key:new String[]{"name","id","path","token"}){ //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		l = new GraphSequence[collection.size()];
+		l = collection.toArray(l);
+		for (int i = 0; i < l.length; i++) {
+			final GraphSequence gs = l[i];
+			final ObjectName o = gs.getObjectName();
+			Hashtable<String, String> properties = o.getKeyPropertyList();
+			String name = gs.getAttribute();
+			// look if objectname as a name
+			for (String key : new String[] { "name", "id", "path", "token" }) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				if (properties.containsKey(key)) {
-					name=String.format("%s.%s",properties.get(key),name); //$NON-NLS-1$
+					name = String.format("%s.%s", properties.get(key), name); //$NON-NLS-1$
 					break;
 				}
 			}
-			p.getPlotter().createSequence(String.valueOf(i),name, gs.getColor(), true);
-			
+			p.getPlotter().createSequence(String.valueOf(i), name, gs.getColor(), true);
+
 		}
 		message = new JLabel();
 		message.setLabelFor(p);
@@ -84,21 +90,25 @@ public class GraphComponent extends JPanel {
 		add(p, BorderLayout.CENTER);
 		add(message, BorderLayout.SOUTH);
 	}
-	
+
 	/**
 	 * Add this graph to a TimeComboBox.
-	 * @param timeComboBox the timeComboBox.
+	 * 
+	 * @param timeComboBox
+	 *            the timeComboBox.
 	 */
-	public void linkToTimeComboBox(TimeComboBox timeComboBox){
+	public void linkToTimeComboBox(TimeComboBox timeComboBox) {
 		timeComboBox.addPlotter(p.getPlotter());
 	}
 
 	/**
 	 * Update the values of the graph.
-	 * @param msc MBeanServerConnection.
+	 * 
+	 * @param msc
+	 *            MBeanServerConnection.
 	 */
 	public void updateGraph(MBeanServerConnection msc) {
-		//remove error
+		// remove error
 		message.setText(""); //$NON-NLS-1$
 		long[] values = new long[l.length];
 		for (int i = 0; i < l.length; i++) {
@@ -106,15 +116,15 @@ public class GraphComponent extends JPanel {
 			ObjectName o = seq.getObjectName();
 			String n = seq.getAttribute();
 			try {
-				//get value
+				// get value
 				values[i] = Utils.getValue(msc, o, n);
 			} catch (MBeanException e) {
-				//set error
+				// set error
 				message.setText(e.getLocalizedMessage());
 				return;
 			}
 		}
-		//add all values
+		// add all values
 		p.getPlotter().addValues(System.currentTimeMillis(), values);
 	}
 

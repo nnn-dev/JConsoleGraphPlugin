@@ -11,6 +11,7 @@ import javax.swing.table.TableModel;
 
 /**
  * Using to configure sequence to add.
+ * 
  * @see GraphCreateDialog
  *
  */
@@ -21,7 +22,9 @@ public class GraphSequenceTableModel implements TableModel {
 
 	/**
 	 * Create the list.
-	 * @param g the list of possibly sequences.
+	 * 
+	 * @param g
+	 *            the list of possibly sequences.
 	 */
 	public GraphSequenceTableModel(Set<GraphSequence> g) {
 		tables = new GraphSequence[g.size()];
@@ -128,6 +131,7 @@ public class GraphSequenceTableModel implements TableModel {
 
 	/**
 	 * Give a new default color.
+	 * 
 	 * @return the choose color.
 	 */
 	private Color newColor() {
@@ -138,6 +142,7 @@ public class GraphSequenceTableModel implements TableModel {
 
 	/**
 	 * Returns all selected sequences.
+	 * 
 	 * @return sequences to show.
 	 */
 	public Collection<GraphSequence> getVisibles() {

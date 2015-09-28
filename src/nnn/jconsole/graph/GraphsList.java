@@ -39,8 +39,11 @@ public class GraphsList extends JDialog implements ActionListener {
 
 	/**
 	 * Show the list of graphs.
-	 * @param parent frame.
-	 * @param g list of graph.
+	 * 
+	 * @param parent
+	 *            frame.
+	 * @param g
+	 *            list of graph.
 	 * @return graph selected or <code>null</code>.
 	 */
 	public static GraphComponent showDialog(Component parent, Set<GraphComponent> g) {
@@ -61,7 +64,7 @@ public class GraphsList extends JDialog implements ActionListener {
 		setButton.addActionListener(this);
 		getRootPane().setDefaultButton(setButton);
 
-		JList<GraphComponent> t = new JList<GraphComponent>();
+		final JList<GraphComponent> t = new JList<GraphComponent>();
 		DefaultListModel<GraphComponent> ml = new DefaultListModel<GraphComponent>();
 		for (GraphComponent gc : g) {
 			ml.addElement(gc);
