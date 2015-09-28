@@ -50,8 +50,14 @@ public class Utils {
 						searchNumberValue(res, o, i.getName(), v);
 					} catch (RuntimeMBeanException e) {
 						// ignore because we cannot get attribute.
-					}
+					} catch (IOException e) {
+                        // ignore because we cannot get attribute (serialization problem?).
+                    } catch (JMException e) {
+                        // ignore because we cannot get attribute.
+                    }
 				}
+            } catch (javax.management.InstanceNotFoundException e1) {
+                //ignore because mbean does not exist anymore
 			} catch (IOException e1) {
 				throw new JConsoleGraphPluginException(Messages.getString("Utils.ERROR_ATTRIBUTE") + o.getCanonicalName(), e1); //$NON-NLS-1$
 			} catch (JMException e1) {
