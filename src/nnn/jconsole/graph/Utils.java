@@ -51,13 +51,13 @@ public class Utils {
 				for (int i = 0; i < iatts.length; i++) {
 					satts[i] = iatts[i].getName();
 				}
-				for (Attribute i : msc.getAttributes(o, satts).asList()) {
+				for (Attribute i : getAttributes(msc,o, satts)) {
 					try {
 						Object v = i.getValue();
 						searchNumberValue(res, o, i.getName(), v);
 					} catch (RuntimeMBeanException e) {
 						// ignore because we cannot get attribute.
-					}
+                    } 
 				}
 			} catch (javax.management.InstanceNotFoundException e1) {
 				// ignore because mbean does not exist anymore
@@ -72,6 +72,28 @@ public class Utils {
 		return res;
 	}
 
+    private static java.util.List<Attribute> getAttributes(MBeanServerConnection msc, ObjectName o, String[] atts) throws javax.management.InstanceNotFoundException {
+        try{
+            return msc.getAttributes(o,atts).asList();
+        }catch(IOException e) {
+            //we cannot retreive an attribute, test with each attributes
+        }catch(javax.management.ReflectionException e){
+            //ignore
+        }
+        java.util.List<Attribute> attributes=new java.util.ArrayList<Attribute>();
+        for(String name: atts){
+            try{
+                Object v=msc.getAttribute(o,name);
+                attributes.add(new Attribute(name,v));
+            }catch(javax.management.JMException e){
+             //ignore;
+            }catch(IOException e){
+                //ignore?
+            }
+        }
+        return attributes;
+    }
+    
 	private static void searchNumberValue(Set<GraphSequence> res, ObjectName o, String i, Object v) {
 		if (v instanceof Number) {
 			res.add(new GraphSequence(o, i));
