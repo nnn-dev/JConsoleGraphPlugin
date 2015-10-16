@@ -77,7 +77,7 @@ public class Utils {
             return msc.getAttributes(o,atts).asList();
         }catch(IOException e) {
             //we cannot retreive an attribute, test with each attributes
-        }catch(javax.management.ReflectionException e){
+        }catch(javax.management.JMException e){
             //ignore
         }
         java.util.List<Attribute> attributes=new java.util.ArrayList<Attribute>();
@@ -85,10 +85,17 @@ public class Utils {
             try{
                 Object v=msc.getAttribute(o,name);
                 attributes.add(new Attribute(name,v));
+            }catch(javax.management.RuntimeOperationsException e){
+            	//ignore
             }catch(javax.management.JMException e){
              //ignore;
             }catch(IOException e){
                 //ignore?
+            }
+            if ("".equals(name)){
+            	System.out.println("");
+            }else{
+            	System.out.println("");
             }
         }
         return attributes;
