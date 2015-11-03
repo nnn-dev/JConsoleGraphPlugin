@@ -121,14 +121,14 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		listScroller.setPreferredSize(new Dimension(800, 250));
 		listScroller.setAlignmentX(LEFT_ALIGNMENT);
 
-		JPanel listPane = new JPanel();
-		listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
+		//JPanel listPane = new JPanel();
+		//listPane.setLayout(new BorderLayout());
 		// default title
 		titlefield = new JTextField(title);
-		listPane.add(titlefield);
-		listPane.add(Box.createRigidArea(new Dimension(0, 5)));
-		listPane.add(listScroller);
-		listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		//listPane.add(titlefield,BorderLayout.NORTH);
+		//listPane.add(Box.createRigidArea(new Dimension(0, 5)));
+		//listPane.add(listScroller,BorderLayout.CENTER);
+		//listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
@@ -140,7 +140,8 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 
 		// Put everything together, using the content pane's BorderLayout.
 		Container contentPane = getContentPane();
-		contentPane.add(listPane, BorderLayout.CENTER);
+		contentPane.add(titlefield,BorderLayout.NORTH);
+		contentPane.add(listScroller, BorderLayout.CENTER);
 		contentPane.add(buttonPane, BorderLayout.PAGE_END);
 
 		// Initialize values.
