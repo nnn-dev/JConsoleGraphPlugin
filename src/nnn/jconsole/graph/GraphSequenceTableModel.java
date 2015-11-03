@@ -32,12 +32,10 @@ public class GraphSequenceTableModel implements TableModel {
 		Arrays.sort(tables);
 	}
 
-	@Override
 	public void addTableModelListener(TableModelListener arg0) {
 
 	}
 
-	@Override
 	public Class<?> getColumnClass(int arg0) {
 		switch (arg0) {
 		case 0:
@@ -52,12 +50,10 @@ public class GraphSequenceTableModel implements TableModel {
 		}
 	}
 
-	@Override
 	public int getColumnCount() {
 		return 4;
 	}
 
-	@Override
 	public String getColumnName(int arg0) {
 		switch (arg0) {
 		case 0:
@@ -73,12 +69,10 @@ public class GraphSequenceTableModel implements TableModel {
 		}
 	}
 
-	@Override
 	public int getRowCount() {
 		return tables.length;
 	}
 
-	@Override
 	public Object getValueAt(int arg0, int arg1) {
 		GraphSequence g = tables[arg0];
 		switch (arg1) {
@@ -95,17 +89,14 @@ public class GraphSequenceTableModel implements TableModel {
 		}
 	}
 
-	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
 		return (arg1 == 0 || arg1 == 3);
 	}
 
-	@Override
 	public void removeTableModelListener(TableModelListener arg0) {
 
 	}
 
-	@Override
 	public void setValueAt(Object arg0, int arg1, int arg2) {
 		GraphSequence g = tables[arg1];
 		switch (arg2) {

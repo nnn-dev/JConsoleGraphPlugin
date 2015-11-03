@@ -151,7 +151,6 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 	}
 
 	// Handle clicks on the Set and Cancel buttons.
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("Set".equals(e.getActionCommand())) { //$NON-NLS-1$
 			value = true;
@@ -170,7 +169,6 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		public ColorR() {
 		}
 
-		@Override
 		public Component getTableCellRendererComponent(JTable table, Object color, boolean isSelected, boolean hasFocus,
 				int row, int column) {
 			JComponent res;
@@ -203,19 +201,16 @@ public class GraphCreateDialog extends JDialog implements ActionListener {
 		public ColorE() {
 		}
 
-		@Override
 		public Object getCellEditorValue() {
 			return cvalue;
 		}
 
-		@Override
 		public Component getTableCellEditorComponent(JTable table, final Object value, boolean isSelected, int row,
 				int column) {
 			final JButton button = new JButton();
 			button.setForeground((Color) value);
 			button.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					cvalue = JColorChooser.showDialog(button,
 							Messages.getString("GraphCreateDialog.COLORCHOOSER_TITLE"), (Color) value); //$NON-NLS-1$

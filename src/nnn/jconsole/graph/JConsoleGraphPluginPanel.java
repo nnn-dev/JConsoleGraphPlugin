@@ -52,7 +52,6 @@ public class JConsoleGraphPluginPanel extends JPanel {
 		// how to add graph.
 		adder.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (context.getConnectionState() != ConnectionState.CONNECTED) {
 					showError(Messages.getString("JConsoleGraphPluginPanel.NOT_CONNECTED")); //$NON-NLS-1$
@@ -78,13 +77,16 @@ public class JConsoleGraphPluginPanel extends JPanel {
 		// how to remove graph.
 		remover.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				GraphComponent g = GraphsList.showDialog(JConsoleGraphPluginPanel.this, graphs);
-				if (g != null) {
-					graphs.remove(g);
-					g.setVisible(false);
+				GraphComponent[] gs = GraphsList.showDialog(JConsoleGraphPluginPanel.this, graphs);
+				if (gs != null) {
+					for(int i=0;i<gs.length;i++){
+						final GraphComponent g=gs[i];
+						graphs.remove(g);
+						g.setVisible(false);
+					}
 					graphspanel.repaint();
+					
 				}
 			}
 

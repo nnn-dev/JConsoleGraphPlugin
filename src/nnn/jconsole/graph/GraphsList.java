@@ -35,7 +35,7 @@ public class GraphsList extends JDialog implements ActionListener {
 	 */
 	private static final long serialVersionUID = -9057749550538513352L;
 	private static GraphsList dialog;
-	private static GraphComponent value;
+	private static Object[] value;
 
 	/**
 	 * Show the list of graphs.
@@ -46,11 +46,13 @@ public class GraphsList extends JDialog implements ActionListener {
 	 *            list of graph.
 	 * @return graph selected or <code>null</code>.
 	 */
-	public static GraphComponent showDialog(Component parent, Set<GraphComponent> g) {
+	public static GraphComponent[] showDialog(Component parent, Set<GraphComponent> g) {
 		Frame frame = JOptionPane.getFrameForComponent(parent);
 		dialog = new GraphsList(frame, g);
 		dialog.setVisible(true);
-		return value;
+		GraphComponent[] res=new GraphComponent[value.length];
+		System.arraycopy(value, 0, res, 0, value.length);
+		return res;
 	}
 
 	private GraphsList(Frame frame, Set<GraphComponent> g) {
@@ -72,9 +74,8 @@ public class GraphsList extends JDialog implements ActionListener {
 		t.setModel(ml);
 		t.addListSelectionListener(new ListSelectionListener() {
 
-			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				value = t.getSelectedValue();
+				value=t.getSelectedValues();
 			}
 		});
 		JScrollPane listScroller = new JScrollPane(t);
@@ -108,7 +109,6 @@ public class GraphsList extends JDialog implements ActionListener {
 		pack();
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (!"Set".equals(e.getActionCommand())) { //$NON-NLS-1$
 			value = null;

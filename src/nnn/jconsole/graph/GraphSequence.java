@@ -85,7 +85,6 @@ public class GraphSequence implements Comparable<GraphSequence> {
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	@Override
 	public int compareTo(GraphSequence o) {
 		if (o.getObjectName().equals(this.getObjectName())) {
 			return this.getAttribute().compareTo(o.getAttribute());
